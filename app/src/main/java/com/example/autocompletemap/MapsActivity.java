@@ -35,45 +35,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         String apiKey = getString(R.string.api_key);
-        if(!Places.isInitialized()){
+
+        if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apiKey);
         }
-
         PlacesClient placesClient = Places.createClient(this);
-
-        // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-        autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
-                new LatLng(21, 78),
-                new LatLng(21, 78)
-        ));
-           // autocompleteFragment.setCountries("India");
-        autocompleteFragment.setCountries("AU", "NZ");
 
-        // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
-        // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public void onPlaceSelected(@NonNull Place place) {
+            public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
             }
 
-
             @Override
-            public void onError(@NonNull Status status) {
+            public void onError(Status status) {
                 // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
-
-
     }
+
 
 
     /**
@@ -89,11 +76,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-       // LatLng sydney = new LatLng(-34, 151);
-        LatLng sydney = new LatLng(21, 78);
-
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+       // // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+       // LatLng pune = new LatLng(18.520278, 73.856667);
+        Log.i(TAG, "An error occurred: " + sydney);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in pune"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,14));
     }
 }
